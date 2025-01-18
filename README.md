@@ -1,48 +1,50 @@
-![Alternova logo](alternova_logo.webp)
+# Welcome to your Expo app 👋
 
-# Prueba técnica React Native
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-Realizar una aplicación la cual permita a un usuario iniciar sesión usando Firebase. Al iniciar sesión deberá llamar una lista elementos de una API pública y mostrarlos en una tabla la cual contenga dos columnas (Favoritos, No favoritos). Al dar clic en algún elemento, este se deberá mover la columna contraria.
+## Get started
 
+1. Install dependencies
 
+   ```bash
+   npm install
+   ```
 
-## Criterios de aceptación
+2. Start the app
 
-1. Clonar el este repositorio y usarlo como base del proyecto.
-2. Se debe poder iniciar sesión usando correo y contraseña mediante la API de [Firebase](https://firebase.google.com/).
-3. La pantalla principal de la aplicación debe consistir de una tabla con dos secciones.
-  <img src="mockup.svg" alt="Design" width="350" />
-4. Se debe realizar un solicitud HTTP a la siguiente url: [https://pokeapi.co/api/v2/pokemon](https://pokeapi.co/api/v2/pokemon).
+   ```bash
+    npx expo start
+   ```
 
-```json
-{
-  "count": 1302,
-  "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
-  "previous": null,
-  "results": [
-    {
-      "name": "bulbasaur",
-      "url": "https://pokeapi.co/api/v2/pokemon/1/"
-    },
-    {
-      "name": "ivysaur",
-      "url": "https://pokeapi.co/api/v2/pokemon/2/"
-    },
-    {
-      "name": "venusaur",
-      "url": "https://pokeapi.co/api/v2/pokemon/3/"
-    }
-  ]
-}
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
 ```
-5. Obtener los detalles de cada uno de los elementos usando el endpoint correspondiente [https://pokeapi.co/api/v2/pokemon/:id/](https://pokeapi.co/api/v2/pokemon/1/).
-6. En el archivo `app/utis/index.ts` existe una funcion que organiza los elementos del punto anterior en base a su altura de una manera ineficiente. Refactorizarla y usarla para organizar los elementos mostrados al usuario.
-7. Los elementos obtenidos se deben mostrar en la primera columna de la tabla.
-8. Al presionar en cualquiera de los elementos, este se debe mover a la columna contraria. Si está en *Favoritos* se moverá a *No favoritos* y viceversa. Se debe mantener el orden de los elementos en base al campo `height`
 
-## Mejora la calificación si...
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-- Realiza pruebas del código
-- Se usa alguna librería de estilos a elección
-- Se organiza el código de manera adecuada
-- Los commits tienen un formato apropiado
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
