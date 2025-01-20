@@ -6,7 +6,7 @@ import { PokemonDatasource } from './PokemonDatasource';
 export class PokemonDatasourceImpl implements PokemonDatasource {
   async getPokemonAll(offset: string): Promise<PokemonResponseModel> {
     try {
-      return await get<PokemonResponseModel>(`/pokemon?offset=${offset}&limit=20`);
+      return await get<PokemonResponseModel>(`?offset=${offset}&limit=20`);
     } catch (error) {
       console.error('Error fetching all Pokemon:', error);
       throw new Error('Failed to fetch Pokemon list');
@@ -15,7 +15,7 @@ export class PokemonDatasourceImpl implements PokemonDatasource {
 
   async getPokemon(id: number): Promise<PokemonInfoModel> {
     try {
-      return await get<PokemonInfoModel>(`/pokemon/${id}`);
+      return await get<PokemonInfoModel>(`${id}`);
     } catch (error) {
       console.error(`Error fetching Pokemon with id ${id}:`, error);
       throw new Error(`Failed to fetch Pokemon with id ${id}`);

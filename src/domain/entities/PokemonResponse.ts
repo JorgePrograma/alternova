@@ -2,7 +2,7 @@ import { Pokemon } from "./Pokemon";
 
 export interface PokemonResponse {
     count:    number;
-    next:     string;
+    next:     null;
     previous: null;
     results:  Pokemon[];
 }

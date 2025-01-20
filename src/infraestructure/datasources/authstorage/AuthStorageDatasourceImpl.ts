@@ -35,7 +35,8 @@ constructor(private secureStorage : typeof SecureStorage){}
       await this.secureStorage.deleteItemAsync(this.USER_KEY)
       return true
     } catch (error) {
+      console.error('Error deleting user:', error);
       return false;
-    }
+    }  
   }
 }

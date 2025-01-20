@@ -11,6 +11,7 @@ const apiClient = axios.create({
 });
 
 export const get = async <T>(url: string): Promise<T> => {
+  console.log("url de api pokemon"+url)
   const response: AxiosResponse<T> = await apiClient.get(url);
   return response.data;
 };

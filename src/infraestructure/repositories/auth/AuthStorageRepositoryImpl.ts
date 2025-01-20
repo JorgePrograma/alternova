@@ -16,7 +16,7 @@ export class AuthStorageRepositoryImpl implements AuthStorageRepository {
   }
 
   async delete(): Promise<boolean> {
-  return this.delete()
+  return this.datasource.delete()
   }
   
 }

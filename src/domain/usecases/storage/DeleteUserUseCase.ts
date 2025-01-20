@@ -1,4 +1,3 @@
-import { UserStorage } from '../../entities/UserStorage';
 import { AuthStorageRepository } from '../../repositories/auth/AuthStorageRepository';
 
 export class DeleteUserUseCase{

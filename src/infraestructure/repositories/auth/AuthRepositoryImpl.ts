@@ -5,6 +5,14 @@ import { UserMapper } from '../../mappers/UserMapper';
 
 export class AuthRepositoryImpl implements AuthRepository {
   constructor(private datasource: AuthDatasource) {}
+  
+  async register(name: string, email: string, password: string): Promise<User | null> {
+    const userModel = await this.datasource.register(name, email, password);
+    if (userModel === null) {
+      return null;
+    }
+    return UserMapper.toDomain(userModel);
+ }
 
   async login(email: string, password: string): Promise<User | null> {
     const userModel = await this.datasource.login(email, password);

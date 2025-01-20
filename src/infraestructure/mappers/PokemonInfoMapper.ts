@@ -1,5 +1,3 @@
-// src/infrastructure/mappers/PokemonInfoMapper.ts
-
 import { PokemonInfo } from "@/src/domain/entities/PokemonInfo";
 import { PokemonInfoModel } from "../models/PokemonInfoModel";
 
@@ -23,34 +21,68 @@ export class PokemonInfoMapper {
         name: form.name,
         url: form.url
       })),
+      game_indices: pokemonInfoModel.game_indices.map(index => ({
+        game_index: index.game_index,
+        version: {
+          name: index.version.name,
+          url: index.version.url
+        }
+      })),
       height: pokemonInfoModel.height,
+      held_items: pokemonInfoModel.held_items,
       id: pokemonInfoModel.id,
+      is_default: pokemonInfoModel.is_default,
+      location_area_encounters: pokemonInfoModel.location_area_encounters,
+      moves: pokemonInfoModel.moves.map(move => ({
+        move: {
+          name: move.move.name,
+          url: move.move.url
+        },
+        version_group_details: move.version_group_details.map(detail => ({
+          level_learned_at: detail.level_learned_at,
+          move_learn_method: {
+            name: detail.move_learn_method.name,
+            url: detail.move_learn_method.url
+          },
+          version_group: {
+            name: detail.version_group.name,
+            url: detail.version_group.url
+          }
+        }))
+      })),
       name: pokemonInfoModel.name,
       order: pokemonInfoModel.order,
+      past_abilities: pokemonInfoModel.past_abilities,
+      past_types: pokemonInfoModel.past_types,
       species: {
         name: pokemonInfoModel.species.name,
         url: pokemonInfoModel.species.url
       },
       sprites: {
-        back_default: pokemonInfoModel.sprites.back_default,
-        back_female: pokemonInfoModel.sprites.back_female,
-        back_shiny: pokemonInfoModel.sprites.back_shiny,
-        back_shiny_female: pokemonInfoModel.sprites.back_shiny_female,
-        front_default: pokemonInfoModel.sprites.front_default,
-        front_female: pokemonInfoModel.sprites.front_female,
-        front_shiny: pokemonInfoModel.sprites.front_shiny,
-        front_shiny_female: pokemonInfoModel.sprites.front_shiny_female,
-        animated: pokemonInfoModel.sprites.animated ? {
-          back_default: pokemonInfoModel.sprites.animated.back_default,
-          back_female: pokemonInfoModel.sprites.animated.back_female,
-          back_shiny: pokemonInfoModel.sprites.animated.back_shiny,
-          back_shiny_female: pokemonInfoModel.sprites.animated.back_shiny_female,
-          front_default: pokemonInfoModel.sprites.animated.front_default,
-          front_female: pokemonInfoModel.sprites.animated.front_female,
-          front_shiny: pokemonInfoModel.sprites.animated.front_shiny,
-          front_shiny_female: pokemonInfoModel.sprites.animated.front_shiny_female
-        } : undefined
+        ...pokemonInfoModel.sprites,
+        other: pokemonInfoModel.sprites.other ? {
+          dream_world: pokemonInfoModel.sprites.other.dream_world,
+          home: pokemonInfoModel.sprites.other.home,
+          "official-artwork": pokemonInfoModel.sprites.other["official-artwork"],
+          showdown: pokemonInfoModel.sprites.other.showdown
+        } : undefined,
+        versions: pokemonInfoModel.sprites.versions
       },
+      stats: pokemonInfoModel.stats.map(stat => ({
+        base_stat: stat.base_stat,
+        effort: stat.effort,
+        stat: {
+          name: stat.stat.name,
+          url: stat.stat.url
+        }
+      })),
+      types: pokemonInfoModel.types.map(type => ({
+        slot: type.slot,
+        type: {
+          name: type.type.name,
+          url: type.type.url
+        }
+      })),
       weight: pokemonInfoModel.weight
     };
   }
@@ -74,34 +106,68 @@ export class PokemonInfoMapper {
         name: form.name,
         url: form.url
       })),
+      game_indices: pokemonInfo.game_indices.map(index => ({
+        game_index: index.game_index,
+        version: {
+          name: index.version.name,
+          url: index.version.url
+        }
+      })),
       height: pokemonInfo.height,
+      held_items: pokemonInfo.held_items,
       id: pokemonInfo.id,
+      is_default: pokemonInfo.is_default,
+      location_area_encounters: pokemonInfo.location_area_encounters,
+      moves: pokemonInfo.moves.map(move => ({
+        move: {
+          name: move.move.name,
+          url: move.move.url
+        },
+        version_group_details: move.version_group_details.map(detail => ({
+          level_learned_at: detail.level_learned_at,
+          move_learn_method: {
+            name: detail.move_learn_method.name,
+            url: detail.move_learn_method.url
+          },
+          version_group: {
+            name: detail.version_group.name,
+            url: detail.version_group.url
+          }
+        }))
+      })),
       name: pokemonInfo.name,
       order: pokemonInfo.order,
+      past_abilities: pokemonInfo.past_abilities,
+      past_types: pokemonInfo.past_types,
       species: {
         name: pokemonInfo.species.name,
         url: pokemonInfo.species.url
       },
       sprites: {
-        back_default: pokemonInfo.sprites.back_default,
-        back_female: pokemonInfo.sprites.back_female,
-        back_shiny: pokemonInfo.sprites.back_shiny,
-        back_shiny_female: pokemonInfo.sprites.back_shiny_female,
-        front_default: pokemonInfo.sprites.front_default,
-        front_female: pokemonInfo.sprites.front_female,
-        front_shiny: pokemonInfo.sprites.front_shiny,
-        front_shiny_female: pokemonInfo.sprites.front_shiny_female,
-        animated: pokemonInfo.sprites.animated ? {
-          back_default: pokemonInfo.sprites.animated.back_default,
-          back_female: pokemonInfo.sprites.animated.back_female,
-          back_shiny: pokemonInfo.sprites.animated.back_shiny,
-          back_shiny_female: pokemonInfo.sprites.animated.back_shiny_female,
-          front_default: pokemonInfo.sprites.animated.front_default,
-          front_female: pokemonInfo.sprites.animated.front_female,
-          front_shiny: pokemonInfo.sprites.animated.front_shiny,
-          front_shiny_female: pokemonInfo.sprites.animated.front_shiny_female
-        } : undefined
+        ...pokemonInfo.sprites,
+        other: pokemonInfo.sprites.other ? {
+          dream_world: pokemonInfo.sprites.other.dream_world,
+          home: pokemonInfo.sprites.other.home,
+          "official-artwork": pokemonInfo.sprites.other["official-artwork"],
+          showdown: pokemonInfo.sprites.other.showdown
+        } : undefined,
+        versions: pokemonInfo.sprites.versions
       },
+      stats: pokemonInfo.stats.map(stat => ({
+        base_stat: stat.base_stat,
+        effort: stat.effort,
+        stat: {
+          name: stat.stat.name,
+          url: stat.stat.url
+        }
+      })),
+      types: pokemonInfo.types.map(type => ({
+        slot: type.slot,
+        type: {
+          name: type.type.name,
+          url: type.type.url
+        }
+      })),
       weight: pokemonInfo.weight
     };
   }
