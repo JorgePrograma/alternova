@@ -65,7 +65,7 @@ const SWAlert: React.FC<SWAlertProps> = ({
           <CustomButton 
             title="Ok" 
             onPress={onClose}
-            className="bg-emerald-600 py-2 px-4 rounded-full"
+            className="bg-emerald-600 py-2 px-4 rounded-full w-12"
           />
         </>
       )}

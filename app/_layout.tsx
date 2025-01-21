@@ -60,7 +60,7 @@ const RootLayout: React.FC = () => {
   }
 
   return (
-    <AnimatedSplashScreen image={require("../assets/images/adaptive-icon.png")}>
+    <AnimatedSplashScreen image={require("../assets/images/logo.png")}>
       <Provider store={store}>
         <ThemeProvider value={DefaultTheme}>
           <InnerLayout />
