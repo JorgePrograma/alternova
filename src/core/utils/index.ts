@@ -1,7 +1,7 @@
 export function sortElements<T>(array: T[], key: keyof T): T[] {
   return [...array].sort((a, b) => {
-    if (typeof a[key] === 'number' && typeof b[key] === 'number') {
-      return (b[key] as number) - (a[key] as number);
+    if (typeof a[key] === 'string' && typeof b[key] === 'string') {
+      return (a[key] as string).localeCompare(b[key] as string);
     }
     return 0;
   });

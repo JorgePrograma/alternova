@@ -6,6 +6,7 @@ import { AuthDatasourceImpl } from "@/src/infraestructure/datasources/auth/AuthD
 import { AuthRepositoryImpl } from "@/src/infraestructure/repositories/auth/AuthRepositoryImpl";
 import React, { useState } from "react";
 import { View } from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CustomHeader from "../../components/molecules/CustomHeader";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -23,11 +24,14 @@ const AuthScreen: React.FC = () => {
   };
 
   return (
-    <View className="">
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      className="bg-emerald-600"
+    >
       <View className="mx-10">
         <CustomHeader />
       </View>
-      <View className="bg-slate-100 p-10 h-full rounded-t-3xl mt-10">
+      <View className="p-10 flex-1 rounded-t-3xl mt-10 bg-slate-100">
         {isLogin ? (
           <LoginForm 
             loginUseCase={loginUseCase} 
@@ -37,7 +41,7 @@ const AuthScreen: React.FC = () => {
           <RegisterForm registerUseCase={registerUseCase} onBackClick={toggleForm} />
         )}
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

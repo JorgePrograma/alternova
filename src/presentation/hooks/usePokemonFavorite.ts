@@ -1,3 +1,5 @@
+import React, { useMemo, useCallback } from 'react';
+import { createSelector } from 'reselect';
 import { PokemonFavorite } from '@/src/domain/entities/PokemonFavorite';
 import { CreateFavoriteUseCase } from '@/src/domain/usecases/pokemon/CreateFavoriteUseCase';
 import { DeleteFavoriteUseCase } from '@/src/domain/usecases/pokemon/DeleteFavoriteUseCase';
@@ -8,29 +10,40 @@ import { addFavorite, clearFavorites, loadFavorites, removeFavorite } from '../s
 import { RootState } from '../store/state/rootReducer';
 import { useAppDispatch, useAppSelector } from './store/useAppDispatch';
 
-// Inicialización de Firestore y repositorios
 const pokemonFavoriteDatasource = new PokemonFavoriteDatasourceImpl();
 const pokemonFavoriteRepository = new PokemonFavoriteRepositoryImpl(pokemonFavoriteDatasource);
 
+const selectUserId = (state: RootState) => state.auth.user?.id || '';
+const selectFavorites = (state: RootState) => state.pokemonFavorite.favorites;
+
+const selectUserFavorites = createSelector(
+  [selectUserId, selectFavorites],
+  (userId, favorites) => favorites[userId] || []
+);
+
 export const usePokemonFavorite = () => {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector((state: RootState) => state.auth.user?.id || '');
-  const favorites = useAppSelector((state: RootState) => state.pokemonFavorite.favorites[userId] || []);
+  const userId = useAppSelector(selectUserId);
+  const favorites = useAppSelector(selectUserFavorites);
 
-  // Inicialización de casos de uso
-  const createFavoriteUseCase = new CreateFavoriteUseCase(pokemonFavoriteRepository);
-  const deleteFavoriteUseCase = new DeleteFavoriteUseCase(pokemonFavoriteRepository);
-  const getFavoritesByIdUseCase = new GetFavoritesByIdUseCase(pokemonFavoriteRepository);
+  const createFavoriteUseCase = useMemo(() => new CreateFavoriteUseCase(pokemonFavoriteRepository), []);
+  const deleteFavoriteUseCase = useMemo(() => new DeleteFavoriteUseCase(pokemonFavoriteRepository), []);
+  const getFavoritesByIdUseCase = useMemo(() => new GetFavoritesByIdUseCase(pokemonFavoriteRepository), []);
 
-  // Verifica si un Pokémon es favorito
-  const isFavorite = (pokemonId: string) => favorites.some(pokemon => pokemon.id === pokemonId);
+  const isFavorite = useCallback((pokemonId: string) => 
+    favorites.some(pokemon => pokemon.id === pokemonId), [favorites]);
 
-  // Alterna el estado de favorito de un Pokémon
-  const toggleFavorite = async (pokemon: { id: string; name: string; imageUrl: string }) => {
+  const toggleFavorite = useCallback(async (pokemon: { id: string; name: string; imageUrl: string }) => {
     if (isFavorite(pokemon.id)) {
-      const success = await deleteFavoriteUseCase.execute(pokemon.id, userId);
-      if (success) {
-        dispatch(removeFavorite({ userId, pokemonId: pokemon.id }));
+      // Primero, actualiza el estado local
+      dispatch(removeFavorite({ userId, pokemonId: pokemon.id }));
+      // Luego, ejecuta el caso de uso
+      try {
+        await deleteFavoriteUseCase.execute(pokemon.id, userId);
+      } catch (error) {
+        console.error("Error al eliminar favorito:", error);
+        // Si falla, revertimos el cambio local
+        dispatch(addFavorite({ userId, pokemon }));
       }
     } else {
       const newPokemon: PokemonFavorite = {
@@ -39,15 +52,20 @@ export const usePokemonFavorite = () => {
         url: pokemon.imageUrl,
         userId: userId
       };
-      const success = await createFavoriteUseCase.execute(newPokemon);
-      if (success) {
-        dispatch(addFavorite({  userId:userId, pokemon:pokemon }));
+      // Primero, actualiza el estado local
+      dispatch(addFavorite({ userId, pokemon: newPokemon }));
+      // Luego, ejecuta el caso de uso
+      try {
+        await createFavoriteUseCase.execute(newPokemon);
+      } catch (error) {
+        console.error("Error al agregar favorito:", error);
+        // Si falla, revertimos el cambio local
+        dispatch(removeFavorite({ userId, pokemonId: pokemon.id }));
       }
     }
-  };
+  }, [userId, isFavorite, createFavoriteUseCase, deleteFavoriteUseCase, dispatch]);
 
-  // Carga los favoritos del usuario
-  const loadUserFavorites = async () => {
+  const loadUserFavorites = useCallback(async () => {
     try {
       const pokemons = await getFavoritesByIdUseCase.execute(userId);
       if (pokemons.length > 0) {
@@ -62,12 +80,11 @@ export const usePokemonFavorite = () => {
     } catch (error) {
       console.error("Error al cargar los favoritos del usuario:", error);
     }
-  };
+  }, [userId, getFavoritesByIdUseCase, dispatch]);
 
-  // Limpia los favoritos del usuario
-  const clearUserFavorites = () => {
+  const clearUserFavorites = useCallback(() => {
     dispatch(clearFavorites(userId));
-  };
+  }, [userId, dispatch]);
 
   return { isFavorite, toggleFavorite, userId, favorites, loadUserFavorites, clearUserFavorites };
 };

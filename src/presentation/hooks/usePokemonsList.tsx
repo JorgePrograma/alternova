@@ -38,11 +38,19 @@ export const usePokemonList = () => {
 
       const pokemonList = await getAllPokemonUseCase.execute(currentOffset.toString());
 
-      setPokemons((prevState) => ({
-        ...pokemonList,
-        results: refresh ? pokemonList.results : [...prevState.results, ...pokemonList.results],
-      }));
-
+      setPokemons((prevState) => {
+        const newResults = refresh 
+          ? pokemonList.results 
+          : [...prevState.results, ...pokemonList.results];
+        
+        const sortedResults = sortElements(newResults, 'name');
+      
+        return {
+          ...pokemonList,
+          results: sortedResults,
+        };
+      });
+      
       setOffset(currentOffset + ITEMS_PER_PAGE);
     } catch (error) {
       console.error("Error loading pokemons:", error);

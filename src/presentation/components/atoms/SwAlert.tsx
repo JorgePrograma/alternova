@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, View, Animated } from "react-native";
 import CustomButton from "./CustomButton";
 
 interface SWAlertProps {
@@ -8,6 +8,7 @@ interface SWAlertProps {
   message: string;
   onClose: () => void;
   autoClose?: boolean;
+  duration?: number;
 }
 
 const SWAlert: React.FC<SWAlertProps> = ({
@@ -16,39 +17,60 @@ const SWAlert: React.FC<SWAlertProps> = ({
   message,
   onClose,
   autoClose = true,
+  duration = 5000,
 }) => {
   const [visible, setVisible] = useState(true);
+  const fadeAnim = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+
     if (autoClose && !isLoading && isSuccess !== null) {
       const timer = setTimeout(() => {
-        setVisible(false);
-        onClose();
-      }, 5000);
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }).start(() => {
+          setVisible(false);
+          onClose();
+        });
+      }, duration);
       return () => clearTimeout(timer);
     }
-  }, [isLoading, isSuccess, autoClose, onClose]);
+  }, [isLoading, isSuccess, autoClose, onClose, duration, fadeAnim]);
 
   if (!visible) return null;
 
   return (
-    <View className="absolute rounded-3xl shadow-slate-400 inset-0 justify-center items-center bg-white">
+    <Animated.View 
+      style={{ opacity: fadeAnim }}
+      className="absolute inset-x-4 top-10 rounded-3xl shadow-lg bg-white p-6"
+    >
       {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#4B5563" />
       ) : (
         <>
           <Text
-            className={`text-lg mb-5 text-center w-72 ${
-              isSuccess ? "text-green-500" : "text-red-500"
+            className={`text-lg mb-5 text-center ${
+              isSuccess ? "text-green-600" : "text-red-600"
             }`}
           >
             {message}
           </Text>
-          <CustomButton title="Ok" onPress={onClose} />
+          <CustomButton 
+            title="Ok" 
+            onPress={onClose}
+            className="bg-emerald-600 py-2 px-4 rounded-full"
+          />
         </>
       )}
-    </View>
+    </Animated.View>
   );
 };
 
-export default SWAlert;
+export default React.memo(SWAlert);
