@@ -2849,17 +2849,24 @@
   dependencies:
     merge-options "^3.0.4"
 
+<<<<<<< HEAD
 "@react-native-firebase/app@^21.7.0", "@react-native-firebase/app@21.7.0", "@react-native-firebase/app@21.7.1":
   version "21.7.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-21.7.0.tgz"
   integrity sha512-gIL3L0dUAM0jP9bXnVNTvvBNnd+VczLKHDblnTZzV34qbG5QPlN1d+zPGXDdqxwchCT++FqTWdmASRfL1tndQA==
+=======
+"@react-native-firebase/app@^21.7.1", "@react-native-firebase/app@21.7.1":
+  version "21.7.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-21.7.1.tgz"
+  integrity sha512-sBXKJE+Uu2+G8SBQzUXMEIyWK932GqxfKsCAVOfzEegxknQuQ8l6qx/tIbMeEFuBJlo334GNctMa4ehePog5lQ==
+>>>>>>> d6a14a4 (se mejorlo la conexion a firebase)
   dependencies:
     firebase "10.13.2"
 
-"@react-native-firebase/auth@^21.7.0":
-  version "21.7.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-21.7.0.tgz"
-  integrity sha512-IF/bxY/5oevOglowB88uViQgPglMZufsewYw/U3BZ6zW1Tit6xTk4gKuSCx1bAkJd06VBaYN/vKIESjPlLCJBQ==
+"@react-native-firebase/auth@^21.7.1":
+  version "21.7.1"
+  resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-21.7.1.tgz"
+  integrity sha512-aJ7e2xZvEupOsTk4dM8XwQUErJOn9NzA9ghCTN8ypkLAyOguGOdt/WSIQxAn/8o8xxPd5XSPyVkGDEvlhpIgDw==
   dependencies:
     plist "^3.1.0"
 

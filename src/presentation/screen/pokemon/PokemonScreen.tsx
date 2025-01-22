@@ -3,9 +3,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import { TouchableOpacity, View } from "react-native";
+<<<<<<< HEAD
+=======
+import { useSelector } from "react-redux";
+>>>>>>> d6a14a4 (se mejorlo la conexion a firebase)
 import CustomLabelTitle from "../../components/atoms/CustomLabelTitle";
 import { usePokemonFavorite } from "../../hooks/usePokemonFavorite";
 import { usePokemonList } from "../../hooks/usePokemonsList";
+import { RootState } from "../../store/store";
 import FavoritePokemonList from "./components/FavoritePokemonList";
 import PokemonList from "./components/PokemonList";
 

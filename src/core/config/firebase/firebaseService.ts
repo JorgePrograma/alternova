@@ -49,3 +49,16 @@ class FirebaseService {
 }
 
 export default FirebaseService;
+
+// Funciones de utilidad para mantener la compatibilidad con el código existente
+export function initializeFirebase(): void {
+  FirebaseService.getInstance();
+}
+
+export function getFirebaseAuth(): Auth {
+  return FirebaseService.getInstance().getAuth();
+}
+
+export function getFirebaseFirestore(): Firestore {
+  return FirebaseService.getInstance().getFirestore();
+}

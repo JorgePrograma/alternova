@@ -13,6 +13,7 @@ import AnimatedSplashScreen from "@/src/presentation/screen/splash/SplashScreen"
 import { Provider } from "react-redux";
 import store from "@/src/presentation/store/store";
 import { usePokemonFavorite } from "@/src/presentation/hooks/usePokemonFavorite";
+import { initializeFirebase } from "@/src/core/config/firebase/configFirebase";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,9 +48,14 @@ const RootLayout: React.FC = () => {
   useEffect(() => {
     async function initializeApp() {
       if (fontsLoaded) {
-        const app = App.getInstance();
-        await app.initialize();
-        setAppInitialized(true);
+        try {
+          await initializeFirebase();
+          const app = App.getInstance();
+          await app.initialize();
+          setAppInitialized(true);
+        } catch (error) {
+          console.error("Error initializing app:", error);
+        }
       }
     }
     initializeApp();

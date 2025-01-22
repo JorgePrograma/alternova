@@ -14,5 +14,6 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-, "src/infraestructure/datasources/auth/AuthDatasource", "src/core/config/firebase/configFirebase.ts"  ]
+, "src/infraestructure/datasources/auth/AuthDatasource", 
+"src/core/config/firebase/configFirebase.ts"  ]
 }

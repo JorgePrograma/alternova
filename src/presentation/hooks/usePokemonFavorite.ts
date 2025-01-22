@@ -4,6 +4,8 @@ import { DeleteFavoriteUseCase } from '@/src/domain/usecases/pokemon/DeleteFavor
 import { GetFavoritesByIdUseCase } from '@/src/domain/usecases/pokemon/GetFavoritesByIdUserUseCase';
 import PokemonFavoriteDatasourceImpl from "@/src/infraestructure/datasources/pokemon/favorite/PokemonFavoriteDatasourceImpl";
 import { PokemonFavoriteRepositoryImpl } from '@/src/infraestructure/repositories/pokemon/PokemonFavoriteRepositoryImpl';
+import { useCallback, useMemo } from 'react';
+import { createSelector } from 'reselect';
 import { addFavorite, clearFavorites, loadFavorites, removeFavorite } from '../store/slices/pokemonFavoriteSlice';
 import { RootState } from '../store/state/rootReducer';
 import { useAppDispatch, useAppSelector } from './store/useAppDispatch';

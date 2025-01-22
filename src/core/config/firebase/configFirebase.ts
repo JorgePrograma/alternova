@@ -1,10 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { initializeApp, getApps } from 'firebase/app';
-import { Auth, getReactNativePersistence, initializeAuth } from 'firebase/auth';
-import { Firestore, initializeFirestore } from 'firebase/firestore';
+import { getApps, initializeApp } from 'firebase/app';
+import { Auth, initializeAuth } from 'firebase/auth';
 
 let auth: Auth;
-let db: Firestore;
 
 export async function initializeFirebase() {
   const firebaseConfig = {
@@ -18,27 +15,14 @@ export async function initializeFirebase() {
 
   if (getApps().length === 0) {
     const app = initializeApp(firebaseConfig);
-    auth = initializeAuth(app, {
-      persistence: getReactNativePersistence(AsyncStorage)
-    });
-    db = initializeFirestore(app, {
-      experimentalForceLongPolling: true,
-      experimentalAutoDetectLongPolling: true,
-      useFetchStreams: false
-    });
+    auth = initializeAuth(app);
   }
 }
+
 
 export function getFirebaseAuth() {
   if (!auth) {
     throw new Error('Firebase Auth has not been initialized. Call initializeFirebase() first.');
   }
   return auth;
-}
-
-export function getFirestoreDb() {
-  if (!db) {
-    throw new Error('Firestore has not been initialized. Call initializeFirebase() first.');
-  }
-  return db;
 }
